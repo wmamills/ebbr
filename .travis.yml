@@ -16,10 +16,6 @@ addons:
     - texlive
     - texlive-latex-extra
     - texlive-humanities
-install:
-- pip3 install --user mako
-- pip3 install --user typing
-- pip3 install --user Sphinx==2.4.4
 script:
 - make latexpdf
 - make html
@@ -35,18 +31,11 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    branch: upstream
-    repo: glikely/ebbr
+    branch: tmp-build
+    repo: wmamills/ebbr
 - provider: pages
   github_token: "$GITHUB_TOKEN"
   local_dir: build/singlehtml
   skip_cleanup: true
   on:
-    branch: master
-- provider: pages
-  github_token: "$GITHUB_TOKEN"
-  local_dir: build/singlehtml
-  skip_cleanup: true
-  repo: arm-software/ebbr
-  on:
-    branch: upstream
+    branch: tmp_build
