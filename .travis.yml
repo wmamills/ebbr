@@ -40,4 +40,4 @@ deploy:
   local_dir: build/singlehtml
   skip_cleanup: true
   on:
-    branch: tmp_build
+    branch: tmp-build
