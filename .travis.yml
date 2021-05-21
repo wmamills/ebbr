@@ -27,7 +27,7 @@ before_deploy:
 - cp build/latex/ebbr.pdf build/ebbr-$TRAVIS_TAG.pdf
 deploy:
 - provider: releases
-  prerelease: true
+  api_key: "$GITHUB_TOKEN"
   file_glob: true
   file:
   - build/ebbr-*.pdf
