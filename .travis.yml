@@ -10,12 +10,14 @@ git:
 addons:
   apt:
     packages:
+    - python3-sphinx
     - python3-pip
     - latexmk
     - libalgorithm-diff-perl
     - texlive
     - texlive-latex-extra
     - texlive-humanities
+    - libalgorithm-diff-perl
 script:
 - make latexpdf
 - make html
