@@ -1,0 +1,4 @@
+#!/bin/bash
+DISTRO=${1:-debian:10}
+CMD=${2:-/scrap/setup.sh}
+docker run -it --rm -v "${PWD}:/scrap/${NAME}" $DISTRO ${CMD}
