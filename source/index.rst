@@ -18,18 +18,14 @@ Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
    :alt: Creative Commons License
    :align: right
 
-.. The below container and single literal space make sure the floating image
-   has completed before we start the revision table.  Otherwise they overlap
-   in the HTML format.  The PDF format is OK w/o it in most versions of the
-   tools.  Keeping it in the PDF adds some vertical whitespace, so we don't.
+.. The below raw html is to make sure the floating image above has completed 
+   before we start the revision table.  Otherwise they overlap in the HTML 
+   format.  The PDF format handles the float OK in most versions of the
+   tools.
 
-   Keep the space after the vertical bar below!!
+.. raw:: html
 
-.. only:: html
-
-    .. container:clearer
-
-    | 
+    <div style="clear:both"></div>
 
 .. tabularcolumns:: l c p{11.5cm}
 .. list-table:: Revision History
