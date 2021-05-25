@@ -1,0 +1,43 @@
+distro testing:
+
+underscore good, upper case bad, x unknown
+key             BIMSHP
+ubuntu 20.04    ______
+ubuntu 18.04    __MS_P
+ubuntu 16.04    Bxxxxx          pip shinx-build broken
+ubuntu 14.04    Bxxxxx          ""
+debian 10       _____P
+debian 9        ______
+fedora 34       ______
+centos 8        Bxxxxx          unknown packages
+centos 7        Bxxxxx          no sphinx-build
+
+Description of Problems:
+builds
+        _ ok
+        B broken
+
+ubuntu 14.04 build is broken which is strange
+Grant's upstream build is 14.04 and is assumed to be OK
+I have matched the .travis.yml actions to arm-software/ebbr:main
+need to check grants branches
+
+build prompts for input
+        _ no
+        I yes
+
+Multipage HTML TOC
+        _ ok (but does not scroll)
+        M broken (no TOC)
+
+Singlepage HTML TOC too long
+        _ ok
+        S broken
+
+HTML cc-by logo
+        _ ok
+        H overlaps revision table
+
+PDF cc-by logo
+        _ ok
+        P not floating right (follows inline with copyright text)
