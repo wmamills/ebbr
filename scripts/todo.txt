@@ -1,0 +1,32 @@
+dockit:
+* put junk files in ./prjinfo/local/tmp
+* add ./prjinfo/local to .git/.gitignore
+* unique tmpfile
+* find setup file
+* persist container (per distro, last)
+* sub-commands
+        * shell
+        * admin-shell
+        * set default options
+* options
+        * distro
+        * setup file
+        * user personalization or not
+                * generic user or match calling user
+        * prj volume
+                container path /prj or actual full path
+                bind dir to /prj or copy somehow
+        * "make" target
+  processing
+        * get default options
+
+CI via travis
+* fixup for grant
+
+CI via github actions:
+* deploy to gh_pages
+* deploy to releases on tag
+* make it work for anyone
+
+actual content:
+* refix CC logo in HTML using inline <HTML>

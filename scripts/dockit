@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -xe 
+
+MOUNTDIR=/prj
+SCRIPT_NAME=$(basename $0)
+
+mktemp() {
+        TEMPFILE=xxx_temp
+        echo export MY_USER=$(whoami)  >$TEMPFILE
+        echo export MY_UID=$(id -u)   >>$TEMPFILE
+        echo export MY_GID=$(id -g)   >>$TEMPFILE
+}
+
+setup_distro() {
+        groupadd --gid $MY_GID $MY_USER
+        groupadd --system sudo_np
+        useradd  --uid $MY_UID --gid $MY_GID -mN $MY_USER
+        mkdir -p /etc/sudoers.d/
+        echo "%sudo_np ALL=(ALL:ALL) NOPASSWD:ALL" >/etc/sudoers.d/sudo_np
+        export DEBIAN_FRONTEND=noninteractive
+}
+
+top_level() {
+        DISTRO=${1:-ubuntu:20.04}
+        CMD=${2:-setup.sh}
+
+        cd $(dirname $0)/..
+        mktemp
+        docker run -it --rm \
+                -v "${PWD}:${MOUNTDIR}" $DISTRO \
+                ${MOUNTDIR}/scripts/dockit \
+                --std-flow ${MOUNTDIR}/${TEMPFILE} ${MOUNTDIR}/scripts/${CMD}
+        rm $TEMPFILE
+}
+
+std_flow() {
+        # read vard from TEMPFILE
+        shift; source $1; shift
+
+        # do common admin setup of the container
+        setup_distro
+
+        # now execute the command the user specified (or project specific setup)
+        $1 admin_setup
+
+        # project specific setup in user context
+        cd ${MOUNTDIR}
+        su $MY_USER $1 prj_setup
+
+        # project specific build/run, again in user context
+        su $MY_USER $1 prj_build
+        exit
+}
+
+case "$1" in
+--std-flow)
+        std_flow "$@"
+        ;;
+*)
+        top_level "$@"
+        ;;
+esac
