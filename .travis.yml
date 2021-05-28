@@ -51,8 +51,7 @@ deploy:
   skip_cleanup: true
   on:
     all_branches: true
-    condition: $TRAVIS_REPO != "arm-software/ebbr"
-    condition: $TRAVIS_REPO != "wmamills/ebbr"
+    repo: NOT IN (arm-software/ebbr, wmamills/ebbr)
     condition: -n "$GITHUB_TOKEN"
 
 # Special rule for bill while he tests both github actions and travis
@@ -62,7 +61,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: tmp-travis
-    condition: $TRAVIS_REPO == "wmamills/ebbr"
+    repo:  wmamills/ebbr
 
 # official site rule, only update pages on push to main
 - provider: pages
