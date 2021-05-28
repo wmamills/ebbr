@@ -4,17 +4,16 @@ name: main-ci
 on:
     # Triggers the workflow on push or pull request events but only for the main branch
     push:
-        branches: [ tmp-build ]
+
     pull_request:
-        branches: [ main ]
 
     # Allows you to run this workflow manually from the Actions tab
-        workflow_dispatch:
+    workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
     # This workflow contains a single job called "build"
-    build:
+    build-and-deploy:
         # The type of runner that the job will run on
         runs-on: ubuntu-20.04
 
@@ -26,3 +25,9 @@ jobs:
             # Runs a single command using the runners shell
             - name: Run setup and build
               run: ./scripts/setup.sh sudo_it
+
+            - name: Deploy to gh_pages
+              uses: JamesIves/github-pages-deploy-action@4.1.3
+              with:
+                branch: gh-pages
+                folder: _build/all
