@@ -52,7 +52,17 @@ deploy:
   on:
     all_branches: true
     condition: $TRAVIS_REPO != "arm-software/ebbr"
+    condition: $TRAVIS_REPO != "wmamills/ebbr"
     condition: -n "$GITHUB_TOKEN"
+
+# Special rule for bill while he tests both github actions and travis
+- provider: pages
+  github_token: "$GITHUB_TOKEN"
+  local_dir: build/all
+  skip_cleanup: true
+  on:
+    branch: tmp-travis
+    condition: $TRAVIS_REPO == "wmamills/ebbr"
 
 # official site rule, only update pages on push to main
 - provider: pages
