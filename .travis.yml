@@ -21,8 +21,14 @@ addons:
     - libalgorithm-diff-perl
 script:
 - make all
+
 before_deploy:
 - cp build/latex/ebbr.pdf build/ebbr-$TRAVIS_TAG.pdf
+
+# this works for the offical repo and should work for anyone's fork
+# opt in by defining GITHUB_TOKEN
+# you can test with random tags but they should not flow back to the official
+# repo
 deploy:
 - provider: releases
   api_key: "$GITHUB_TOKEN"
@@ -33,6 +39,12 @@ deploy:
   on:
     tags: true
     condition: -n "$GITHUB_TOKEN"
+
+# random user fork, pushes to any branch will deploy to that repo's pages
+# you must enable github pages for your account and for this repo's fork
+# you must opt in to this by defining GITHUB_TOKEN
+# (This prevents errors if user does not setup github pages.)
+# The repos website will have the pages from whichever branch pushed last
 - provider: pages
   github_token: "$GITHUB_TOKEN"
   local_dir: build/all
@@ -41,6 +53,8 @@ deploy:
     all_branches: true
     condition: $TRAVIS_REPO != "arm-software/ebbr"
     condition: -n "$GITHUB_TOKEN"
+
+# official site rule, only update pages on push to main
 - provider: pages
   github_token: "$GITHUB_TOKEN"
   local_dir: build/singlehtml
