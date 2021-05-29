@@ -1,0 +1,686 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2. UEFI &#8212; Embedded Base Boot Requirements (EBBR) Specification v2.0.0-24-gccd0c3e documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Privileged or Secure Firmware" href="chapter3-secureworld.html" />
+    <link rel="prev" title="1. About This Document" href="chapter1-about.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Embedded Base Boot Requirements (EBBR) Specification</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="chapter1-about.html">1. About This Document</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. UEFI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-version">2.1. UEFI Version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-compliance">2.2. UEFI Compliance</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#required-elements">2.2.1. Required Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#required-platform-specific-elements">2.2.2. Required Platform Specific Elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#required-global-variables">2.2.3. Required Global Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#block-device-partitioning">2.2.4. Block device partitioning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-system-environment-and-configuration">2.3. UEFI System Environment and Configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aarch64-exception-levels">2.3.1. AArch64 Exception Levels</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#uefi-boot-at-el2">2.3.1.1. UEFI Boot at EL2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uefi-boot-at-el1">2.3.1.2. UEFI Boot at EL1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-boot-services">2.4. UEFI Boot Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memory-map">2.4.1. Memory Map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-tables">2.4.2. Configuration Tables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#devicetree">2.4.2.1. Devicetree</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-secure-boot-optional">2.4.3. UEFI Secure Boot (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-runtime-services">2.5. UEFI Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#runtime-device-mappings">2.5.1. Runtime Device Mappings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#real-time-clock-rtc">2.5.1.1. Real-time Clock (RTC)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-reset-and-shutdown">2.5.2. UEFI Reset and Shutdown</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runtime-variable-access">2.5.3. Runtime Variable Access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-update">2.5.4. Firmware Update</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapter3-secureworld.html">3. Privileged or Secure Firmware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapter4-firmware-media.html">4. Firmware Storage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">5. Bibliography</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="chapter1-about.html" title="previous chapter">1. About This Document</a></li>
+      <li>Next: <a href="chapter3-secureworld.html" title="next chapter">3. Privileged or Secure Firmware</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="uefi">
+<h1>2. UEFI<a class="headerlink" href="#uefi" title="Permalink to this headline">¶</a></h1>
+<p>This chapter discusses specific UEFI implementation details for EBBR compliant
+platforms.</p>
+<div class="section" id="uefi-version">
+<h2>2.1. UEFI Version<a class="headerlink" href="#uefi-version" title="Permalink to this headline">¶</a></h2>
+<p>This document uses version 2.8 Errata A of the UEFI specification <a class="reference internal" href="references.html#uefi" id="id1">[UEFI]</a>.</p>
+</div>
+<div class="section" id="uefi-compliance">
+<h2>2.2. UEFI Compliance<a class="headerlink" href="#uefi-compliance" title="Permalink to this headline">¶</a></h2>
+<p>EBBR compliant platform shall conform to a subset of the <a class="reference internal" href="references.html#uefi" id="id2">[UEFI]</a> spec as listed
+in this section.
+Normally, UEFI compliance would require full compliance with all items listed
+in UEFI § 2.6.
+However, the EBBR target market has a reduced set of requirements,
+and so some UEFI features are omitted as unnecessary.</p>
+<div class="section" id="required-elements">
+<h3>2.2.1. Required Elements<a class="headerlink" href="#required-elements" title="Permalink to this headline">¶</a></h3>
+<p>This section replaces the list of required elements in <a class="reference internal" href="references.html#uefi" id="id3">[UEFI]</a> § 2.6.1.
+All of the following UEFI elements are required for EBBR compliance.</p>
+<table border="1" class="colwidths-given docutils" id="id16">
+<caption><span class="caption-number">Table 2.1 </span><span class="caption-text">UEFI Required Elements</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">Requirement</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>EFI_SYSTEM_TABLE</cite></td>
+<td>The system table is required to provide required to access UEFI Boot Services,
+UEFI Runtime Services, consoles, and other firmware, vendor and platform
+information.</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_BOOT_SERVICES</cite></td>
+<td>All functions defined as boot services must exist.
+Methods for unsupported or unimplemented behaviour must return
+an appropriate error code.</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_RUNTIME_SERVICES</cite></td>
+<td>All functions defined as runtime services must exist.
+Methods for unsupported or unimplemented behaviour must return
+an appropriate error code.
+If any runtime service is unimplemented, it must be indicated
+via the <cite>EFI_RT_PROPERTIES_TABLE</cite>.</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_LOADED_IMAGE_PROTOCOL</cite></td>
+<td>Must be installed for each loaded image</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_LOADED_IMAGE_DEVICE_PATH_PROTOCOL</cite></td>
+<td>Must be installed for each loaded image</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_DEVICE_PATH_PROTOCOL</cite></td>
+<td>An <cite>EFI_DEVICE_PATH_PROTOCOL</cite> must be installed onto all device
+handles provided by the firmware.</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_DEVICE_PATH_UTILITIES_PROTOCOL</cite></td>
+<td>Interface for creating and manipulating UEFI device paths</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id17">
+<caption><span class="caption-number">Table 2.2 </span><span class="caption-text">Notable omissions from UEFI § 2.6.1</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">Note</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>EFI_DECOMPRESS_PROTOCOL</cite></td>
+<td>Native EFI decompression is rarely used and therefore not required.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="required-platform-specific-elements">
+<h3>2.2.2. Required Platform Specific Elements<a class="headerlink" href="#required-platform-specific-elements" title="Permalink to this headline">¶</a></h3>
+<p>This section replaces the list of required elements in <a class="reference internal" href="references.html#uefi" id="id4">[UEFI]</a> § 2.6.2.
+All of the following UEFI elements are required for EBBR compliance.</p>
+<table border="1" class="colwidths-given docutils" id="id18">
+<caption><span class="caption-number">Table 2.3 </span><span class="caption-text">UEFI Platform-Specific Required Elements</span><a class="headerlink" href="#id18" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Console devices</td>
+<td>The platform must have at least one console device</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_SIMPLE_TEXT_INPUT_PROTOCOL</cite></td>
+<td>Needed for console input</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL</cite></td>
+<td>Needed for console input</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL</cite></td>
+<td>Needed for console output</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_DEVICE_PATH_TO_TEXT_PROTOCOL</cite></td>
+<td>Needed for console output</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_HII_STRING_PROTOCOL</cite></td>
+<td>Required by EFI shell and for compliance testing</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_HII_DATABASE_PROTOCOL</cite></td>
+<td>Required by EFI shell and for compliance testing</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_UNICODE_COLLATION2_PROTOCOL</cite></td>
+<td>Required by EFI shell and for compliance testing</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_BLOCK_IO_PROTOCOL</cite></td>
+<td>Required for block device access</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</cite></td>
+<td>Required if booting from block device is supported</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_RNG_PROTOCOL</cite></td>
+<td>Required if the platform has a hardware entropy source</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_SIMPLE_NETWORK_PROTOCOL</cite></td>
+<td>Required if the platform has a network device.</td>
+</tr>
+<tr class="row-even"><td>HTTP Boot (UEFI § 24.7)</td>
+<td>Required if the platform supports network booting</td>
+</tr>
+</tbody>
+</table>
+<p>The following table is a list of notable deviations from UEFI § 2.6.2.
+Many of these deviations are because the EBBR use cases do not require
+interface specific UEFI protocols, and so they have been made optional.</p>
+<table border="1" class="colwidths-given docutils" id="id19">
+<caption><span class="caption-number">Table 2.4 </span><span class="caption-text">Notable Deviations from UEFI § 2.6.2</span><a class="headerlink" href="#id19" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Element</th>
+<th class="head">Description of deviation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>LoadImage()</cite></td>
+<td>The <cite>LoadImage()</cite> boot service is not required to install an
+<cite>EFI_HII_PACKAGE_LIST_PROTOCOL</cite> for an image containing a custom PE/COFF
+resource with the type ‘HII’. HII resource images are not needed to run
+the UEFI shell or the SCT.</td>
+</tr>
+<tr class="row-odd"><td><cite>ConnectController()</cite></td>
+<td>The <cite>ConnectController()</cite> boot service is not required to support the
+<cite>EFI_PLATFORM_DRIVER_OVERRIDE_PROTOCOL</cite>,
+<cite>EFI_DRIVER_FAMILY_OVERRIDE_PROTOCOL</cite>, and
+<cite>EFI_BUS_SPECIFIC_DRIVER_OVERRIDE_PROTOCOL</cite>.
+These override protocols are
+only useful if drivers are loaded as EFI binaries by the firmware.</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_HII_CONFIG_ACCESS_PROTOCOL</cite></td>
+<td>UEFI requires this for console devices, but it is rarely necessary in practice.
+Therefore this protocol is not required.</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_HII_CONFIG_ROUTING_PROTOCOL</cite></td>
+<td>UEFI requires this for console devices, but it is rarely necessary in practice.
+Therefore this protocol is not required.</td>
+</tr>
+<tr class="row-even"><td>Graphical console</td>
+<td>Platforms with a graphical device are not required to expose it as a graphical console.</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_DISK_IO_PROTOCOL</cite></td>
+<td>Rarely used interface that isn’t required for EBBR use cases</td>
+</tr>
+<tr class="row-even"><td><cite>EFI_PXE_BASE_CODE_PROTOCOL</cite></td>
+<td>Booting via the Preboot Execution Environment (PXE) is insecure.
+Loading via PXE is typically executed before launching the first UEFI application.</td>
+</tr>
+<tr class="row-odd"><td>Network protocols</td>
+<td>A full implementation of the UEFI general purpose networking ABIs is not required,
+including <cite>EFI_NETWORK_INTERFACE_IDENTIFIER_PROTOCOL</cite>, <cite>EFI_MANAGED_NETWORK_PROTOCOL</cite>,
+<cite>EFI_*_SERVICE_BINDING_PROTOCOL</cite>, or any of the IPv4 or IPv6 protocols.</td>
+</tr>
+<tr class="row-even"><td>Byte stream device support (UART)</td>
+<td>UEFI protocols not required</td>
+</tr>
+<tr class="row-odd"><td>PCI bus support</td>
+<td>UEFI protocols not required</td>
+</tr>
+<tr class="row-even"><td>USB bus support</td>
+<td>UEFI protocols not required</td>
+</tr>
+<tr class="row-odd"><td>NVMe pass through support</td>
+<td>UEFI protocols not required</td>
+</tr>
+<tr class="row-even"><td>SCSI pass through support</td>
+<td>UEFI protocols not required</td>
+</tr>
+<tr class="row-odd"><td><cite>EFI_DRIVER_FAMILY_OVERRIDE_PROTOCOL</cite></td>
+<td>Not required</td>
+</tr>
+<tr class="row-even"><td>Option ROM support</td>
+<td>In many EBBR use cases there is no requirement to generically support
+any PCIe add in card at the firmware level.
+When PCIe devices are used, drivers for the device are often built into
+the firmware itself rather than loaded as option ROMs.
+For this reason EBBR implementations are not required to support option
+ROM loading.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="required-global-variables">
+<h3>2.2.3. Required Global Variables<a class="headerlink" href="#required-global-variables" title="Permalink to this headline">¶</a></h3>
+<p>EBBR compliant platforms are required to support the following Global
+Variables as found in <a class="reference internal" href="references.html#uefi" id="id5">[UEFI]</a> § 3.3.</p>
+<table border="1" class="colwidths-given docutils" id="id20">
+<caption><span class="caption-number">Table 2.5 </span><span class="caption-text">Required UEFI Variables</span><a class="headerlink" href="#id20" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>Boot####</cite></td>
+<td>A boot load option. <cite>####</cite> is a numerical hex value</td>
+</tr>
+<tr class="row-odd"><td><cite>BootCurrent</cite></td>
+<td>The boot option that was selected for the current boot</td>
+</tr>
+<tr class="row-even"><td><cite>BootNext</cite></td>
+<td>The boot option that will be used for the next boot only</td>
+</tr>
+<tr class="row-odd"><td><cite>BootOrder</cite></td>
+<td>An ordered list of boot options.
+Firmware will try <cite>BootNext</cite> and each <cite>Boot####</cite> entry in the
+order given by BootOrder to find the first bootable image.</td>
+</tr>
+<tr class="row-even"><td><cite>OsIndications</cite></td>
+<td>Method for OS to request features from firmware</td>
+</tr>
+<tr class="row-odd"><td><cite>OsIndicationsSupported</cite></td>
+<td>Variable for firmware to indicate which features can be enabled</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="block-device-partitioning">
+<h3>2.2.4. Block device partitioning<a class="headerlink" href="#block-device-partitioning" title="Permalink to this headline">¶</a></h3>
+<p>The system firmware must implement support for MBR, GPT and El Torito partitioning
+on block devices.
+System firmware may also implement other partitioning methods as needed by the platform,
+but OS support for other methods is outside the scope of this specification.</p>
+</div>
+</div>
+<div class="section" id="uefi-system-environment-and-configuration">
+<h2>2.3. UEFI System Environment and Configuration<a class="headerlink" href="#uefi-system-environment-and-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The resident UEFI boot-time environment shall use the highest non-secure
+privilege level available.
+The exact meaning of this is architecture dependent, as detailed below.</p>
+<p>Resident UEFI firmware might target a specific privilege level.
+In contrast, UEFI Loaded Images, such as third-party drivers and boot
+applications, must not contain any built-in assumptions that they are to be
+loaded at a given privilege level during boot time since they can, for example,
+legitimately be loaded into either EL1 or EL2 on AArch64.</p>
+<div class="section" id="aarch64-exception-levels">
+<h3>2.3.1. AArch64 Exception Levels<a class="headerlink" href="#aarch64-exception-levels" title="Permalink to this headline">¶</a></h3>
+<p>On AArch64 UEFI shall execute as 64-bit code at either EL1 or EL2,
+depending on whether or not virtualization is available at OS load time.</p>
+<div class="section" id="uefi-boot-at-el2">
+<h4>2.3.1.1. UEFI Boot at EL2<a class="headerlink" href="#uefi-boot-at-el2" title="Permalink to this headline">¶</a></h4>
+<p>Most systems are expected to boot UEFI at EL2, to allow for the installation of
+a hypervisor or a virtualization aware Operating System.</p>
+</div>
+<div class="section" id="uefi-boot-at-el1">
+<h4>2.3.1.2. UEFI Boot at EL1<a class="headerlink" href="#uefi-boot-at-el1" title="Permalink to this headline">¶</a></h4>
+<p>Booting of UEFI at EL1 is most likely employed within a hypervisor hosted Guest
+Operating System environment, to allow the subsequent booting of a
+UEFI-compliant Operating System.
+In this instance, the UEFI boot-time environment can be provided, as a
+virtualized service, by the hypervisor and not as part of the host firmware.</p>
+</div>
+</div>
+</div>
+<div class="section" id="uefi-boot-services">
+<h2>2.4. UEFI Boot Services<a class="headerlink" href="#uefi-boot-services" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="memory-map">
+<h3>2.4.1. Memory Map<a class="headerlink" href="#memory-map" title="Permalink to this headline">¶</a></h3>
+<p>The UEFI environment must provide a system memory map, which must include all
+appropriate devices and memories that are required for booting and system
+configuration.</p>
+<p>All RAM defined by the UEFI memory map must be identity-mapped, which means
+that virtual addresses must equal physical addresses.</p>
+<p>The default RAM allocated attribute must be <cite>EFI_MEMORY_WB</cite>.</p>
+</div>
+<div class="section" id="configuration-tables">
+<h3>2.4.2. Configuration Tables<a class="headerlink" href="#configuration-tables" title="Permalink to this headline">¶</a></h3>
+<p>A UEFI system that complies with this specification may provide additional
+tables via the EFI Configuration Table.</p>
+<p>Compliant systems are required to provide one, but not both, of the following
+tables:</p>
+<ul class="simple">
+<li>an Advanced Configuration and Power Interface <a class="reference internal" href="references.html#acpi" id="id6">[ACPI]</a> table, or</li>
+<li>a Devicetree <a class="reference internal" href="references.html#dtspec" id="id7">[DTSPEC]</a> system description</li>
+</ul>
+<p>EBBR systems must not provide both ACPI and Devicetree
+tables at the same time.
+Systems that support both interfaces must provide a configuration
+mechanism to select either ACPI or Devicetree,
+and must ensure only the selected interface is provided to the OS loader.</p>
+<div class="section" id="devicetree">
+<h4>2.4.2.1. Devicetree<a class="headerlink" href="#devicetree" title="Permalink to this headline">¶</a></h4>
+<p>If firmware provides a Devicetree system description then it must be provided
+in Flattened Devicetree Blob (DTB) format version 17 or higher as described in
+<a class="reference internal" href="references.html#dtspec" id="id8">[DTSPEC]</a> § 5.1.
+The following GUID must be used in the EFI system table (<a class="reference internal" href="references.html#uefi" id="id9">[UEFI]</a> § 4)
+to identify the DTB.
+The DTB must be contained in memory of type EfiACPIReclaimMemory.
+EfiACPIReclaimMemory was chosen to match the recommendation for ACPI
+tables which fulfill the same task as the DTB.</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#define EFI_DTB_GUID \</span>
+<span class="cp">     EFI_GUID(0xb1b621d5, 0xf19c, 0x41a5, \</span>
+<span class="cp">              0x83, 0x0b, 0xd9, 0x15, 0x2c, 0x69, 0xaa, 0xe0)</span>
+</pre></div>
+</div>
+<p>Firmware must have the DTB resident in memory and installed in the EFI system table
+before executing any UEFI applications or drivers that are not part of the system
+firmware image.
+Once the DTB is installed as a configuration table,
+the system firmware must not make any modification to it or reference any data
+contained within the DTB.</p>
+<p>UEFI applications are permitted to modify or replace the loaded DTB.
+System firmware must not depend on any data contained within the DTB.
+If system firmware makes use of a DTB for its own configuration,
+it should use a separate private copy that is not installed in the
+EFI System Table or otherwise be exposed to EFI applications.</p>
+</div>
+</div>
+<div class="section" id="uefi-secure-boot-optional">
+<h3>2.4.3. UEFI Secure Boot (Optional)<a class="headerlink" href="#uefi-secure-boot-optional" title="Permalink to this headline">¶</a></h3>
+<p>UEFI Secure Boot is optional for this specification.</p>
+<p>If Secure Boot is implemented, it must conform to the UEFI specification for Secure Boot. There are no additional
+requirements for Secure Boot.</p>
+</div>
+</div>
+<div class="section" id="uefi-runtime-services">
+<h2>2.5. UEFI Runtime Services<a class="headerlink" href="#uefi-runtime-services" title="Permalink to this headline">¶</a></h2>
+<p>UEFI runtime services exist after the call to <cite>ExitBootServices()</cite> and are
+designed to provide a limited set of persistent services to the platform
+Operating System or hypervisor.
+Functions contained in <cite>EFI_RUNTIME_SERVICES</cite> are expected to be available
+during both boot services and runtime services.
+However, it isn’t always practical for all <cite>EFI_RUNTIME_SERVICES</cite> functions
+to be callable during runtime services due to hardware limitations.
+If any <cite>EFI_RUNTIME_SERVICES</cite> functions are only available during boot services
+then firmware shall provide the <cite>EFI_RT_PROPERTIES_TABLE</cite> to
+indicate which functions are available during runtime services.
+Functions that are not available during runtime services shall return
+<cite>EFI_UNSUPPORTED</cite>.</p>
+<p><a class="reference internal" href="#uefi-runtime-service-requirements"><span class="std std-numref">Table 2.6</span></a> details which <cite>EFI_RUNTIME_SERVICES</cite>
+are required to be implemented during boot services and runtime services.</p>
+<span id="uefi-runtime-service-requirements"></span><table border="1" class="colwidths-given docutils" id="id21">
+<caption><span class="caption-number">Table 2.6 </span><span class="caption-text"><cite>EFI_RUNTIME_SERVICES</cite> Implementation Requirements</span><a class="headerlink" href="#id21" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="40%" />
+<col width="30%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><cite>EFI_RUNTIME_SERVICES</cite> function</th>
+<th class="head">Before <cite>ExitBootServices()</cite></th>
+<th class="head">After <cite>ExitBootServices()</cite></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><cite>GetTime</cite></td>
+<td>Required if RTC present</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>SetTime</cite></td>
+<td>Required if RTC present</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td><cite>GetWakeupTime</cite></td>
+<td>Required if wakeup supported</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>SetWakeupTime</cite></td>
+<td>Required if wakeup supported</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td><cite>SetVirtualAddressMap</cite></td>
+<td>N/A</td>
+<td>Required</td>
+</tr>
+<tr class="row-odd"><td><cite>ConvertPointer</cite></td>
+<td>N/A</td>
+<td>Required</td>
+</tr>
+<tr class="row-even"><td><cite>GetVariable</cite></td>
+<td>Required</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>GetNextVeriableName</cite></td>
+<td>Required</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td><cite>SetVariable</cite></td>
+<td>Required</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>GetNextHighMonotonicCount</cite></td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td><cite>ResetSystem</cite></td>
+<td>Required</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>UpdateCapsule</cite></td>
+<td>Required for in-band update</td>
+<td>Optional</td>
+</tr>
+<tr class="row-even"><td><cite>QueryCapsuleCapabilities</cite></td>
+<td>Optional</td>
+<td>Optional</td>
+</tr>
+<tr class="row-odd"><td><cite>QueryVariableInfo</cite></td>
+<td>Optional</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="runtime-device-mappings">
+<h3>2.5.1. Runtime Device Mappings<a class="headerlink" href="#runtime-device-mappings" title="Permalink to this headline">¶</a></h3>
+<p>Firmware shall not create runtime mappings, or perform any runtime IO that will
+conflict with device access by the OS.
+Normally this means a device may be controlled by firmware, or controlled by
+the OS, but not both.
+E.g. if firmware attempts to access an eMMC device at runtime then it will
+conflict with transactions being performed by the OS.</p>
+<p>Devices that are provided to the OS (i.e., via PCIe discovery or ACPI/DT
+description) shall not be accessed by firmware at runtime.
+Similarly, devices retained by firmware (i.e., not discoverable by the OS)
+shall not be accessed by the OS.</p>
+<p>Only devices that explicitly support concurrent access by both firmware and an
+OS may be mapped at runtime by both firmware and the OS.</p>
+<div class="section" id="real-time-clock-rtc">
+<h4>2.5.1.1. Real-time Clock (RTC)<a class="headerlink" href="#real-time-clock-rtc" title="Permalink to this headline">¶</a></h4>
+<p>Not all embedded systems include an RTC, and even if one is present,
+it may not be possible to access the RTC from runtime services.
+e.g., The RTC may be on a shared I2C bus which runtime services cannot access
+because it will conflict with the OS.</p>
+<p>If an RTC is present, then <cite>GetTime()</cite> and <cite>SetTime()</cite> must be supported
+before <cite>ExitBootServices()</cite> is called.</p>
+<p>However, if firmware does not support access to the RTC after
+<cite>ExitBootServices()</cite>, then <cite>GetTime()</cite> and <cite>SetTime()</cite> shall return <cite>EFI_UNSUPPORTED</cite>
+and the OS must use a device driver to control the RTC.</p>
+</div>
+</div>
+<div class="section" id="uefi-reset-and-shutdown">
+<h3>2.5.2. UEFI Reset and Shutdown<a class="headerlink" href="#uefi-reset-and-shutdown" title="Permalink to this headline">¶</a></h3>
+<p><cite>ResetSystem()</cite> is required to be implemented in boot services, but it is
+optional for runtime services.
+During runtime services, the operating system should first attempt to
+use <cite>ResetSystem()</cite> to reset the system.</p>
+<p>If firmware doesn’t support <cite>ResetSystem()</cite> during runtime services, then the call
+will immediately return, and the OS should fall back to an architecture or
+platform specific reset mechanism.</p>
+<p>On AArch64 platforms implementing <a class="reference internal" href="references.html#psci" id="id10">[PSCI]</a>,
+if <cite>ResetSystem()</cite> is not implemented then the Operating System should fall
+back to making a PSCI call to reset or shutdown the system.</p>
+</div>
+<div class="section" id="runtime-variable-access">
+<h3>2.5.3. Runtime Variable Access<a class="headerlink" href="#runtime-variable-access" title="Permalink to this headline">¶</a></h3>
+<p>There are many platforms where it is difficult to implement <cite>SetVariable()</cite> for
+non-volatile variables during runtime services because the firmware cannot
+access storage after <cite>ExitBootServices()</cite> is called.</p>
+<p>e.g., If firmware accesses an eMMC device directly at runtime, it will
+collide with transactions initiated by the OS.
+Neither U-Boot nor Tianocore have a generic solution for accessing or updating
+variables stored on shared media. <a class="footnote-reference" href="#opteesupplicant" id="id11">[1]</a></p>
+<p>If a platform does not implement modifying non-volatile variables with
+<cite>SetVariable()</cite> after <cite>ExitBootServices()</cite>,
+then firmware shall return <cite>EFI_UNSUPPORTED</cite> for any call to <cite>SetVariable()</cite>,
+and must advertise that <cite>SetVariable()</cite> isn’t available during runtime services
+via the <cite>RuntimeServicesSupported</cite> value in the <cite>EFI_RT_PROPERTIES_TABLE</cite>
+as defined in <a class="reference internal" href="references.html#uefi" id="id12">[UEFI]</a> § 4.6.
+EFI applications can read <cite>RuntimeServicesSupported</cite> to determine if calls
+to <cite>SetVariable()</cite> need to be performed before calling <cite>ExitBootServices()</cite>.</p>
+<p>Even when <cite>SetVariable()</cite> is not supported during runtime services, firmware
+should cache variable names and values in EfiRuntimeServicesData memory so
+that <cite>GetVariable()</cite> and <cite>GetNextVeriableName()</cite> can behave as specified.</p>
+</div>
+<div class="section" id="firmware-update">
+<h3>2.5.4. Firmware Update<a class="headerlink" href="#firmware-update" title="Permalink to this headline">¶</a></h3>
+<p>Being able to update firmware to address security issues is a key feature of secure platforms.
+EBBR platforms are required to implement either an in-band or an out-of-band firmware update mechanism.</p>
+<p>If firmware update is performed in-band (firmware on the application processor updates itself),
+then the firmware shall implement the <cite>UpdateCapsule()</cite> runtime service and accept updates in the
+“Firmware Management Protocol Data Capsule Structure” format as described in <a class="reference internal" href="references.html#uefi" id="id13">[UEFI]</a> § 23.3,
+“Delivering Capsules Containing Updates to Firmware Management Protocol.  <a class="footnote-reference" href="#fmpnote" id="id14">[2]</a>
+Firmware is also required to provide an EFI System Resource Table (ESRT). <a class="reference internal" href="references.html#uefi" id="id15">[UEFI]</a> § 23.4
+Every firmware image that can be updated in-band must be described in the ESRT.</p>
+<p>If firmware update is performed out-of-band (e.g., by an independent Baseboard
+Management Controller (BMC), or firmware is provided by a hypervisor),
+then the platform is not required to implement the <cite>UpdateCapsule()</cite> runtime service.</p>
+<p><cite>UpdateCapsule()</cite> is only required before <cite>ExitBootServices()</cite> is called.</p>
+<table class="docutils footnote" frame="void" id="opteesupplicant" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[1]</a></td><td><p class="first">It is worth noting that OP-TEE has a similar problem
+regarding secure storage.
+OP-TEE’s chosen solution is to rely on an OS supplicant agent to perform
+storage operations on behalf of OP-TEE.
+The same solution may be applicable to solving the UEFI non-volatile
+variable problem, but it requires additional OS support to work.
+Regardless, EBBR compliance does not require <cite>SetVariable()</cite> support
+during runtime services.</p>
+<p class="last"><a class="reference external" href="https://optee.readthedocs.io/en/latest/architecture/secure_storage.html">https://optee.readthedocs.io/en/latest/architecture/secure_storage.html</a></p>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="fmpnote" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id14">[2]</a></td><td><p class="first">The <cite>UpdateCapsule()</cite> runtime service is expected to be suitable
+for use by generic firmware update services like fwupd and Windows Update.
+Both fwupd and Windows Update read the ESRT table to determine what firmware
+can be updated, and use an EFI helper application to call <cite>UpdateCapsule()</cite>
+before <cite>ExitBootServices()</cite> is called.</p>
+<p class="last"><a class="reference external" href="https://fwupd.org/">https://fwupd.org/</a></p>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2017-2021 Arm Limited and Contributors.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/chapter2-uefi.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
