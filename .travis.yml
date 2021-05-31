@@ -51,8 +51,17 @@ deploy:
   skip_cleanup: true
   on:
     all_branches: true
-    repo: NOT IN (arm-software/ebbr)
+    repo: NOT IN (arm-software/ebbr, wmamills/ebbr)
     condition: -n "$GITHUB_TOKEN"
+
+# Special rule for bill while he tests both github actions and travis
+- provider: pages
+  github_token: "$GITHUB_TOKEN"
+  local_dir: build/all
+  skip_cleanup: true
+  on:
+    branch: tmp-travis
+    repo:  wmamills/ebbr
 
 # official repo
 # only deploy singlehtml and only on push to main
